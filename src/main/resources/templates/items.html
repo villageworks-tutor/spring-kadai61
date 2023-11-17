@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品一覧</title>
+</head>
+<body>
+	<header>
+		<h1 class="header__body">商品一覧</h1>
+	</header>
+	<!-- 商品リストが送信されている場合は表示する -->
+	<th:block th:if="${itemList}">
+	<table class="list" border="1">
+		<tr class="list__row--header">
+			<th class="list__header--cell">商品ID</th>
+			<th class="list__header--cell">商品名</th>
+			<th class="list__header--cell">値段</th>
+			<th class="list__header--cell">更新</th>
+			<th class="list__header--cell">削除</th>
+		</tr>
+		<tr class="list__row---data" th:each="item:${itemList}">
+			<td class="list__data--cell" th:text="${item.id}"></td>
+			<td class="list__data--cell" th:text="${item.name}"></td>
+			<td class="list__data--cell" th:text="${item.price}"></td>
+			<td class="list__data--cell">
+				<form th:action="'/items/' + ${item.id} + '/edit'" method="get">
+					<button class="input__button--update">更新</button>
+				</form>
+			</td>
+			<td class="list__data--cell">
+				<form th:action="'/items/' + ${item.id} + '/delete'" method="post">
+					<button class="input__button--update">削除</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	</th:block>
+	<a class="link--body" href="/items/add">新規登録</a>
+</body>
+</html>
