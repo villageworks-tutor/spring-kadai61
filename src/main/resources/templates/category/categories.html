@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>カテゴリー一覧</title>
+</head>
+<body>
+	<h1>カテゴリー一覧</h1>
+	<table border="1">
+		<tr>
+			<th>カテゴリーID</th>
+			<th>カテゴリー名</th>
+		</tr>
+		<tr th:each="category:${categoryList}">
+			<td th:text="${category.id}"></td>
+			<td th:text="${category.name}"></td>
+		</tr>
+	</table>
+	<a href="/categories/add">新規登録</a>
+</body>
+</html>
