@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -42,6 +43,31 @@ public class CategoryController {
 		// リクエストパラメータをもとにCategoryクラスをインスタンス化
 		Category category = new Category(name);
 		// カテゴリーの登録
+		categoryRepository.save(category);
+		// 画面遷移
+		return "redirect:/categories";
+	}
+	
+	@GetMapping("/categories/{id}/edit")
+	public String edit(
+			@PathVariable("id") Integer id,
+			Model model) {
+		// 更新対象のCategoryクラスのインスタンスを取得
+		Category category = categoryRepository.findById(id).get();
+		// スコープに 取得したカテゴリインスタンスを登録
+		model.addAttribute("category", category);
+		// 画面遷移
+		return "category/editCategory";
+	}
+	
+	@PostMapping("/categories/{id}/edit")
+	public String update(
+			@PathVariable("id") Integer id,
+			@RequestParam(name = "name", defaultValue = "") String name,
+			Model model) {
+		// パスパラメータとリクエストパラメータをもとにCtegoryクラスをインスタンス化
+		Category category = new Category(id, name);
+		// 更新処理を実行
 		categoryRepository.save(category);
 		// 画面遷移
 		return "redirect:/categories";
