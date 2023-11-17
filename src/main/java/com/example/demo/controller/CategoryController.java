@@ -36,6 +36,7 @@ public class CategoryController {
 		return "/category/addCategory";
 	}
 	
+	// カテゴリー登録処理
 	@PostMapping("/categories/add")
 	public String store(
 			@RequestParam(name = "", defaultValue = "") String name,
@@ -48,6 +49,7 @@ public class CategoryController {
 		return "redirect:/categories";
 	}
 	
+	// カテゴリー更新画面表示
 	@GetMapping("/categories/{id}/edit")
 	public String edit(
 			@PathVariable("id") Integer id,
@@ -60,6 +62,7 @@ public class CategoryController {
 		return "category/editCategory";
 	}
 	
+	// カテゴリー更新処理
 	@PostMapping("/categories/{id}/edit")
 	public String update(
 			@PathVariable("id") Integer id,
@@ -73,4 +76,14 @@ public class CategoryController {
 		return "redirect:/categories";
 	}
 	
+	// カテゴリー削除処理
+	@PostMapping("/categories/{id}/delete")
+	public String delete(
+			@PathVariable("id") Integer id, 
+			Model model) {
+		// 削除処理を実行
+		categoryRepository.deleteById(id);
+		// 画面遷移
+		return "redirect:/categories";
+	}
 }
